@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':kotlinlibrary'
 rootProject.name='hello-world'
