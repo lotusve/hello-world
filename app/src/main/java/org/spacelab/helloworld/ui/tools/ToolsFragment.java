@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import org.spacelab.StringUtil;
 import org.spacelab.helloworld.R;
 
 public class ToolsFragment extends Fragment {
@@ -32,4 +33,13 @@ public class ToolsFragment extends Fragment {
         });
         return root;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        StringUtil.StaticParams.hello(StringUtil.StaticParams.getHELLO_WORLD());
+
+    }
+
 }
