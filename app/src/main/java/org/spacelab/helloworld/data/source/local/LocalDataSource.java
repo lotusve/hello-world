@@ -29,6 +29,11 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
+    public void getData() {
+
+    }
+
+    @Override
     public void saveData() {
 
     }

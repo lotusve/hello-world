@@ -12,6 +12,8 @@ public interface DataSource {
 
     void getData(GetDataCallback callback);
 
+    void getData();
+
     void saveData();
 
 }

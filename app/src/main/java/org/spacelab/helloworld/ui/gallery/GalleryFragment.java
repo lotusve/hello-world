@@ -1,6 +1,7 @@
 package org.spacelab.helloworld.ui.gallery;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,5 +40,14 @@ public class GalleryFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("llg-", "GalleryFragment onResume.");
+
+        galleryViewModel.getData();
     }
 }
