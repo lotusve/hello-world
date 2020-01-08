@@ -6,7 +6,7 @@ public class LocalDataSource implements DataSource {
 
     private static LocalDataSource INSTANCE;
 
-    private HelloWorldDao dao;
+    private DataDao dao;
 
     private LocalDataSource() {
 
