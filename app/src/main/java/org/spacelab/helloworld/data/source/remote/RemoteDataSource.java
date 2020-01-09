@@ -8,6 +8,7 @@ import org.spacelab.helloworld.data.source.remote.http.gallery.ApiService;
 import org.spacelab.helloworld.data.source.remote.http.gallery.Config;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
+import java.io.File;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -90,11 +91,11 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void getData(GetDataCallback callback) {
 
-        /*Log.d("llg-", "getData begin.");
+        Log.d(Config.TAG, "request begin.");
 
         MediaType textType = MediaType.parse("text/plain");
-        RequestBody api_key = RequestBody.create(textType, "LEgX_3o9-0f78adjCGx74JJ6Bqs30vKs");
-        RequestBody api_secret = RequestBody.create(textType, "dIixyMLvWwRePplZU7gpz9At_ajBd50w");
+        RequestBody api_key = RequestBody.create(textType, Config.FACE_API_KEY);
+        RequestBody api_secret = RequestBody.create(textType, Config.FACE_API_SECRET);
         RequestBody return_attributes = RequestBody.create(textType, "gender,age");
 
         File imgFile = new File("/storage/emulated/0/baidu/searchbox/downloads/1578479381607.jpg");
@@ -106,22 +107,16 @@ public class RemoteDataSource implements DataSource {
         call.enqueue(new Callback<ResponseBean>() {
             @Override
             public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
-
-                Log.d("llg-", "onResponse.");
-
+                Log.d(Config.TAG, "onResponse.");
                 ResponseBean bean = response.body();
-
-                Log.d("llg-", bean.toString());
-
+                Log.d(Config.TAG, bean.toString());
             }
 
             @Override
             public void onFailure(Call<ResponseBean> call, Throwable t) {
-
-                Log.d("llg-", "onFailure", t);
-
+                Log.e(Config.TAG, "onFailure", t);
             }
-        });*/
+        });
 
     }
 

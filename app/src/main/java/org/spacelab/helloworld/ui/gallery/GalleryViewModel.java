@@ -26,7 +26,7 @@ public class GalleryViewModel extends ViewModel {
 
     public void getData(){
 
-        /*dataRepository.getData(new DataSource.GetDataCallback() {
+        dataRepository.getData(new DataSource.GetDataCallback() {
             @Override
             public void onDataLoaded() {
 
@@ -36,9 +36,9 @@ public class GalleryViewModel extends ViewModel {
             public void onDataNotAvailable() {
 
             }
-        });*/
+        });
 
-        dataRepository.getData();
+        // dataRepository.getData();
 
     }
 }
