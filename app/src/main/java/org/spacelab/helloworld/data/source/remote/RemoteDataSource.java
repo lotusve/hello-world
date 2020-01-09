@@ -5,10 +5,9 @@ import android.util.Log;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.spacelab.helloworld.data.source.DataSource;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ApiService;
+import org.spacelab.helloworld.data.source.remote.http.gallery.Config;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
-import java.io.File;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -34,23 +33,33 @@ public class RemoteDataSource implements DataSource {
     private ApiService apiService;
 
     private RemoteDataSource() {
+        initApiService();
+    }
 
+    private void initApiService() {
+        OkHttpClient client = getOkHttpClient();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.FACE_BASE_URL) // 设置网络请求的Url地址
+                .addConverterFactory(GsonConverterFactory.create()) // 设置数据解析器
+                .client(client)
+                .build();
+
+        apiService = retrofit.create(ApiService.class);
+    }
+
+    private OkHttpClient getOkHttpClient() {
         SSLContext sslContext = null;
-
         X509TrustManager x509TrustManager = null;
-
         try {
-            sslContext = SSLContext.getInstance("TLS");
-
+            sslContext = SSLContext.getInstance(Config.PROTOCOL);
             x509TrustManager = new X509TrustManager() {
                 @Override
                 public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
                 }
 
                 @Override
                 public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-
                 }
 
                 @Override
@@ -58,25 +67,13 @@ public class RemoteDataSource implements DataSource {
                     return new X509Certificate[0];
                 }
             };
-
             TrustManager[] trustAllCerts = new TrustManager[]{x509TrustManager};
-
             sslContext.init(null, trustAllCerts, new SecureRandom());
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(Config.TAG, e.getMessage(), e);
         }
 
-
-        OkHttpClient client = new OkHttpClient.Builder().sslSocketFactory(sslContext.getSocketFactory(), x509TrustManager).hostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER).build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api-cn.faceplusplus.com/") // 设置网络请求的Url地址
-                .addConverterFactory(GsonConverterFactory.create()) // 设置数据解析器
-                .client(client)
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
-
+        return new OkHttpClient.Builder().sslSocketFactory(sslContext.getSocketFactory(), x509TrustManager).hostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER).build();
     }
 
     public static RemoteDataSource getInstance() {
@@ -131,56 +128,24 @@ public class RemoteDataSource implements DataSource {
     @Override
     public void getData() {
 
-        /*String url = "https://www.baidu.com/";
+        Log.d(Config.TAG, "request begin.");
 
-        Call<ResponseBean> call = apiService.getCall(url);
-
-        call.enqueue(new Callback<ResponseBean>() {
-            @Override
-            public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
-
-                Log.d("llg-2", "onResponse.");
-
-                ResponseBean bean = response.body();
-
-                Log.d("llg-2", bean.toString());
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBean> call, Throwable t) {
-
-                Log.d("llg-2", "onFailure", t);
-
-            }
-        });*/
-
-        String url = "https://api-cn.faceplusplus.com/facepp/v3/detect";
-
-        String api_key = "LEgX_3o9-0f78adjCGx74JJ6Bqs30vKs";
-        String api_secret = "dIixyMLvWwRePplZU7gpz9At_ajBd50w";
         String return_attributes = "gender,age";
         String image_url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578494493546&di=a08099ead320449cd910fe7f82ef0b49&imgtype=0&src=http%3A%2F%2Fimg.baizhan.net%2Fuploads%2Fallimg%2F160520%2F21_160520163111_1.jpg";
 
-        Call<ResponseBean> call = apiService.getCall(api_key, api_secret, return_attributes, image_url);
+        Call<ResponseBean> call = apiService.getCall(Config.FACE_API_KEY, Config.FACE_API_SECRET, return_attributes, image_url);
 
         call.enqueue(new Callback<ResponseBean>() {
             @Override
             public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
-
-                Log.d("llg-3", "onResponse.");
-
+                Log.d(Config.TAG, "onResponse.");
                 ResponseBean bean = response.body();
-
-                Log.d("llg-3", bean.toString());
-
+                Log.d(Config.TAG, bean.toString());
             }
 
             @Override
             public void onFailure(Call<ResponseBean> call, Throwable t) {
-
-                Log.d("llg-3", "onFailure", t);
-
+                Log.e(Config.TAG, "onFailure", t);
             }
         });
 

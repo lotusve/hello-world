@@ -25,8 +25,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "hello-world";
-
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override

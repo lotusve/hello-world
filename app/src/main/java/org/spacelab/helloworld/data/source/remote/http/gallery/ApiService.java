@@ -5,7 +5,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -65,9 +64,10 @@ public interface ApiService {
     // https://www.baidu.com/
 
     // @Headers({"Content-Type: multipart/form-data"})
-    @Multipart
+
     @POST("facepp/v3/detect")
-    Call<ResponseBean> getCall(@Part("api_key") RequestBody api_key, @Part("api_secret") RequestBody api_secret, @Part("return_attributes") RequestBody return_attributes, @Part() MultipartBody.Part image_file);
+    @Multipart
+    Call<ResponseBean> getCall(@Part("api_key") RequestBody api_key, @Part("api_secret") RequestBody api_secret, @Part("return_attributes") RequestBody return_attributes, @Part MultipartBody.Part image_file);
 
     @POST()
     Call<ResponseBean> getCall(@Url String url);

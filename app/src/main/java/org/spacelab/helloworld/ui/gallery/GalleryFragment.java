@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import org.spacelab.helloworld.Config;
 import org.spacelab.helloworld.R;
 
 public class GalleryFragment extends Fragment {
@@ -46,7 +47,7 @@ public class GalleryFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.d("llg-", "GalleryFragment onResume.");
+        Log.d(Config.TAG, "GalleryFragment onResume.");
 
         galleryViewModel.getData();
     }
