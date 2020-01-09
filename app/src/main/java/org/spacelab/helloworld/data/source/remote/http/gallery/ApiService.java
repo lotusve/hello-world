@@ -76,4 +76,6 @@ public interface ApiService {
     @POST("facepp/v3/detect")
     Call<ResponseBean> getCall(@Field("api_key") String api_key, @Field("api_secret") String api_secret, @Field("return_attributes") String return_attributes, @Field("image_url") String image_url);
 
+    @POST("facepp/v3/detect")
+    Call<ResponseBean> getCallDetect(@Field("api_key") String api_key, @Field("api_secret") String api_secret, @Field("return_attributes") String return_attributes, @Field("image_base64") String image_base64);
 }

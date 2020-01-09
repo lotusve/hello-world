@@ -1,5 +1,7 @@
 package org.spacelab.helloworld.data.source.remote;
 
+import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 
 import org.apache.http.conn.ssl.SSLSocketFactory;
@@ -9,6 +11,9 @@ import org.spacelab.helloworld.data.source.remote.http.gallery.Config;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -93,13 +98,86 @@ public class RemoteDataSource implements DataSource {
 
         Log.d(Config.TAG, "request begin.");
 
+        // getDataByUploadFile();
+
+        getDatabyUploadFileString();
+
+    }
+
+    private void getDatabyUploadFileString() {
+
+        String return_attributes = "gender,age";
+
+        String image_base64 = getImageBase64String();
+
+        Log.d(Config.TAG, "image_base64: " + image_base64);
+
+        Call<ResponseBean> call = apiService.getCallDetect(Config.FACE_API_KEY, Config.FACE_API_SECRET, return_attributes, image_base64);
+
+        call.enqueue(new Callback<ResponseBean>() {
+            @Override
+            public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
+                Log.d(Config.TAG, "onResponse.");
+                ResponseBean bean = response.body();
+                Log.d(Config.TAG, bean.toString());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBean> call, Throwable t) {
+                Log.e(Config.TAG, "onFailure", t);
+            }
+        });
+
+    }
+
+    private String getImageBase64String() {
+
+        String image_base64 = "";
+
+        File storageDirectory = Environment.getExternalStorageDirectory();
+        Log.d(Config.TAG, "storageDirectory: " + storageDirectory.getAbsolutePath());
+
+        // File imgFile = new File("/storage/emulated/0/baidu/searchbox/downloads/1578479381607.jpg");
+
+        File imgFile = new File(storageDirectory + "/baidu/searchbox/downloads/1578479381607.jpg");
+
+        FileInputStream fis = null;
+
+        try {
+
+            fis = new FileInputStream(imgFile);
+
+            byte[] buffer = new byte[(int) imgFile.length()];
+
+            fis.read(buffer);
+
+            image_base64 = Base64.encodeToString(buffer, Base64.DEFAULT);
+
+        } catch (Exception e) {
+            Log.e(Config.TAG, e.getMessage(), e);
+        } finally {
+            try {
+                fis.close();
+            } catch (IOException e) {
+                Log.e(Config.TAG, e.getMessage(), e);
+            }
+        }
+        return image_base64;
+    }
+
+    private void getDataByUploadFile() {
+
         MediaType textType = MediaType.parse("text/plain");
         RequestBody api_key = RequestBody.create(textType, Config.FACE_API_KEY);
         RequestBody api_secret = RequestBody.create(textType, Config.FACE_API_SECRET);
         RequestBody return_attributes = RequestBody.create(textType, "gender,age");
 
         File imgFile = new File("/storage/emulated/0/baidu/searchbox/downloads/1578479381607.jpg");
-        RequestBody imgRB = RequestBody.create(MediaType.parse("image/*"), imgFile);
+
+        Log.d(Config.TAG, "image file: " + imgFile.getAbsolutePath());
+
+        RequestBody imgRB = RequestBody.create(MediaType.parse("image/jpg"), imgFile);
+        // RequestBody imgRB = RequestBody.create(MediaType.parse("multipart/form-data"), imgFile);
         MultipartBody.Part imgPart = MultipartBody.Part.createFormData("image_file", imgFile.getName(), imgRB);
 
         Call<ResponseBean> call = apiService.getCall(api_key, api_secret, return_attributes, imgPart);
@@ -117,7 +195,6 @@ public class RemoteDataSource implements DataSource {
                 Log.e(Config.TAG, "onFailure", t);
             }
         });
-
     }
 
     @Override
