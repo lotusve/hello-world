@@ -122,7 +122,21 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
      * 从本地相册选择图片
      */
     private void getImageFromLocal() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+//        一种方式
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+//        一种方式
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setType("image/*");
+
+
+        // Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         startActivityForResult(intent, REQUEST_PICK_IMAGE);
     }
 
