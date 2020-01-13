@@ -14,8 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import org.spacelab.helloworld.Config;
+import org.spacelab.helloworld.Config.Config;
 import org.spacelab.helloworld.R;
+import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
 import java.io.File;
 
@@ -40,6 +41,13 @@ public class GalleryFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
+            }
+        });
+
+        galleryViewModel.getResponseBean().observe(this, new Observer<ResponseBean>() {
+            @Override
+            public void onChanged(ResponseBean responseBean) {
+                textView.setText(responseBean.toString());
             }
         });
 

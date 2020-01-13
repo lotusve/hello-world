@@ -1,14 +1,13 @@
 package org.spacelab.helloworld.data.source.remote.http.gallery;
 
-import java.io.File;
-
 public class RequestBean {
 
     private String api_key;
 
     private String api_secret;
 
-    private File image_file;
+    private String image_base64;
+
 
     /**
      * 是否检测并返回根据人脸特征判断出的年龄、性别、情绪等属性
@@ -31,12 +30,12 @@ public class RequestBean {
         this.api_secret = api_secret;
     }
 
-    public File getImage_file() {
-        return image_file;
+    public String getImage_base64() {
+        return image_base64;
     }
 
-    public void setImage_file(File image_file) {
-        this.image_file = image_file;
+    public void setImage_base64(String image_base64) {
+        this.image_base64 = image_base64;
     }
 
     public String getReturn_attributes() {
@@ -52,7 +51,7 @@ public class RequestBean {
         return "RequestBean{" +
                 "api_key='" + api_key + '\'' +
                 ", api_secret='" + api_secret + '\'' +
-                ", image_file=" + image_file +
+                ", image_base64='" + image_base64 + '\'' +
                 ", return_attributes='" + return_attributes + '\'' +
                 '}';
     }

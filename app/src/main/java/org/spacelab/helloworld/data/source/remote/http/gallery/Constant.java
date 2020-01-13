@@ -1,8 +1,6 @@
 package org.spacelab.helloworld.data.source.remote.http.gallery;
 
-public class Config {
-
-    public static final String TAG = "http-gallery";
+public class Constant {
 
     public static final String FACE_BASE_URL = "https://api-cn.faceplusplus.com/";
 

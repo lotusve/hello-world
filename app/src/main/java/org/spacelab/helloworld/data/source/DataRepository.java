@@ -1,6 +1,7 @@
 package org.spacelab.helloworld.data.source;
 
 import org.spacelab.helloworld.data.source.remote.RemoteDataSource;
+import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
 
 public class DataRepository implements DataSource {
 
@@ -24,8 +25,8 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public void getData(GetDataCallback callback, String imageFilePath) {
-        remoteDataSource.getData(callback, imageFilePath);
+    public void getData(RequestBean bean, GetDataCallback callback) {
+        remoteDataSource.getData(bean, callback);
     }
 
     @Override
