@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -35,7 +36,16 @@ public class GalleryFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
 
+        initView(root);
+
+        return root;
+    }
+
+    private void initView(View root) {
         final TextView textView = root.findViewById(R.id.text_gallery);
+        final ImageView imageView = root.findViewById(R.id.image);
+        final TextView genderTV = root.findViewById(R.id.gender);
+        final TextView ageTV = root.findViewById(R.id.age);
 
         galleryViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -47,11 +57,15 @@ public class GalleryFragment extends Fragment {
         galleryViewModel.getResponseBean().observe(this, new Observer<ResponseBean>() {
             @Override
             public void onChanged(ResponseBean responseBean) {
-                textView.setText(responseBean.toString());
+
+                ResponseBean.Face face = responseBean.getFaces().get(0);
+
+                genderTV.setText(face.getAttributes().getGender().getValue());
+                ageTV.setText(face.getAttributes().getGender().getValue());
             }
         });
 
-        return root;
+
     }
 
     @Override
@@ -61,17 +75,20 @@ public class GalleryFragment extends Fragment {
         Log.d(Config.TAG, "GalleryFragment onResume.");
 
         getData();
-
     }
 
     private void getData() {
+        galleryViewModel.getData(getImageFilePath());
+    }
+
+    private String getImageFilePath (){
 
         File storageDirectory = Environment.getExternalStorageDirectory();
 
         String imageFilePath = "/baidu/searchbox/downloads/1578479381607.jpg";
         // String imageFilePath = "/DCIM/Camera/IMG_20200113_115331.jpg";
 
-        galleryViewModel.getData(storageDirectory + imageFilePath);
-
+        return storageDirectory + imageFilePath;
     }
+
 }

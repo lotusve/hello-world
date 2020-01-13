@@ -106,7 +106,7 @@ public class ResponseBean {
                 '}';
     }
 
-    private class Face {
+    public class Face {
 
         /**
          * 人脸的标识
@@ -143,7 +143,7 @@ public class ResponseBean {
         }
     }
 
-    private class Attributes {
+    public class Attributes {
 
         /**
          * 性别分析结果, 男 Male, 女 Female
@@ -180,7 +180,7 @@ public class ResponseBean {
         }
     }
 
-    private class Gender {
+    public class Gender {
         private String value;
 
         public String getValue() {
@@ -199,7 +199,7 @@ public class ResponseBean {
         }
     }
 
-    private class Age {
+    public class Age {
         private String value;
 
         public String getValue() {
