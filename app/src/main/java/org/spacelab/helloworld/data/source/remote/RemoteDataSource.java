@@ -202,11 +202,12 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getData() {
+    public void getData(String imageUrl) {
 
         Log.d(Config.TAG, "request begin.");
 
         String return_attributes = "gender,age";
+
         String image_url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578494493546&di=a08099ead320449cd910fe7f82ef0b49&imgtype=0&src=http%3A%2F%2Fimg.baizhan.net%2Fuploads%2Fallimg%2F160520%2F21_160520163111_1.jpg";
 
         Call<ResponseBean> call = apiService.getCall(Config.FACE_API_KEY, Config.FACE_API_SECRET, return_attributes, image_url);

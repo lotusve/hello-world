@@ -12,7 +12,7 @@ public interface DataSource {
 
     void getData(GetDataCallback callback, String imageFilePath);
 
-    void getData();
+    void getData(String imageUrl);
 
     void saveData();
 

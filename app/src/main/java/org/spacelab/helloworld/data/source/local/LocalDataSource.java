@@ -29,7 +29,7 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public void getData() {
+    public void getData(String imageUrl) {
 
     }
 

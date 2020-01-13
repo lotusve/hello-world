@@ -38,7 +38,6 @@ public class GalleryViewModel extends ViewModel {
             }
         }, imageFilePath);
 
-        // dataRepository.getData();
-
     }
+
 }

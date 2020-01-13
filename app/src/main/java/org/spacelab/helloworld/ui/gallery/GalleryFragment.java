@@ -52,7 +52,11 @@ public class GalleryFragment extends Fragment {
 
         Log.d(Config.TAG, "GalleryFragment onResume.");
 
-        // File imgFile = new File("/storage/emulated/0/baidu/searchbox/downloads/1578479381607.jpg");
+        getData();
+
+    }
+
+    private void getData() {
 
         File storageDirectory = Environment.getExternalStorageDirectory();
 
@@ -60,5 +64,6 @@ public class GalleryFragment extends Fragment {
         // String imageFilePath = "/DCIM/Camera/IMG_20200113_115331.jpg";
 
         galleryViewModel.getData(storageDirectory + imageFilePath);
+
     }
 }
