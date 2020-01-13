@@ -10,7 +10,7 @@ public interface DataSource {
 
     }
 
-    void getData(GetDataCallback callback);
+    void getData(GetDataCallback callback, String imageFilePath);
 
     void getData();
 

@@ -12,59 +12,7 @@ import retrofit2.http.Url;
 
 public interface ApiService {
 
-
-
-//    /**
-//     * {@link Part} 后面支持三种类型，{@link RequestBody}、{@link okhttp3.MultipartBody.Part} 、任意类型
-//     * 除 {@link okhttp3.MultipartBody.Part} 以外，其它类型都必须带上表单字段({@link okhttp3.MultipartBody.Part} 中已经包含了表单字段的信息)，
-//     */
-//    @POST("/form")
-//    @Multipart
-//    Call<ResponseBody> testFileUpload1(@Part("name") RequestBody name, @Part("age") RequestBody age, @Part MultipartBody.Part file);
-//
-//    /**
-//     * PartMap 注解支持一个Map作为参数，支持 {@link RequestBody } 类型，
-//     * 如果有其它的类型，会被{@link retrofit2.Converter}转换，如后面会介绍的 使用{@link com.google.gson.Gson} 的 {@link retrofit2.converter.gson.GsonRequestBodyConverter}
-//     * 所以{@link MultipartBody.Part} 就不适用了,所以文件只能用<b> @Part MultipartBody.Part </b>
-//     */
-//    @POST("/form")
-//    @Multipart
-//    Call<ResponseBody> testFileUpload2(@PartMap Map<String, RequestBody> args, @Part MultipartBody.Part file);
-//
-//    @POST("/form")
-//    @Multipart
-//    Call<ResponseBody> testFileUpload3(@PartMap Map<String, RequestBody> args);
-//}
-//
-//    // 具体使用
-//    MediaType textType = MediaType.parse("text/plain");
-//    RequestBody name = RequestBody.create(textType, "Carson");
-//    RequestBody age = RequestBody.create(textType, "24");
-//    RequestBody file = RequestBody.create(MediaType.parse("application/octet-stream"), "这里是模拟文件的内容");
-//
-//    // @Part
-//    MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.txt", file);
-//    Call<ResponseBody> call3 = service.testFileUpload1(name, age, filePart);
-//        ResponseBodyPrinter.printResponseBody(call3);
-//
-//                // @PartMap
-//                // 实现和上面同样的效果
-//                Map<String, RequestBody> fileUpload2Args = new HashMap<>();
-//        fileUpload2Args.put("name", name);
-//        fileUpload2Args.put("age", age);
-//        //这里并不会被当成文件，因为没有文件名(包含在Content-Disposition请求头中)，但上面的 filePart 有
-//        //fileUpload2Args.put("file", file);
-//        Call<ResponseBody> call4 = service.testFileUpload2(fileUpload2Args, filePart); //单独处理文件
-//        ResponseBodyPrinter.printResponseBody(call4);
-
-
-
-    // https://api-cn.faceplusplus.com/facepp/v3/detect
-
-    // https://www.baidu.com/
-
-    // @Headers({"Content-Type: multipart/form-data"})
-
+    // 测试暂未通过
     @POST("facepp/v3/detect")
     @Multipart
     Call<ResponseBean> getCall(@Part("api_key") RequestBody api_key, @Part("api_secret") RequestBody api_secret, @Part("return_attributes") RequestBody return_attributes, @Part MultipartBody.Part image_file);
@@ -72,10 +20,15 @@ public interface ApiService {
     @POST()
     Call<ResponseBean> getCall(@Url String url);
 
+    // 测试通过
     @FormUrlEncoded
     @POST("facepp/v3/detect")
     Call<ResponseBean> getCall(@Field("api_key") String api_key, @Field("api_secret") String api_secret, @Field("return_attributes") String return_attributes, @Field("image_url") String image_url);
 
+    // 测试通过
     @POST("facepp/v3/detect")
-    Call<ResponseBean> getCallDetect(@Field("api_key") String api_key, @Field("api_secret") String api_secret, @Field("return_attributes") String return_attributes, @Field("image_base64") String image_base64);
+    @Multipart
+    Call<ResponseBean> getCallDetect(@Part("api_key") RequestBody api_key, @Part("api_secret") RequestBody api_secret, @Part("return_attributes") RequestBody return_attributes, @Part("image_base64") RequestBody image_base64);
+
+
 }

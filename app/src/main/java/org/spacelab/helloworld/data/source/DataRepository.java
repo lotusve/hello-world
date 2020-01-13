@@ -24,9 +24,9 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public void getData(GetDataCallback callback) {
+    public void getData(GetDataCallback callback, String imageFilePath) {
 
-        remoteDataSource.getData(callback);
+        remoteDataSource.getData(callback, imageFilePath);
 
     }
 

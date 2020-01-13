@@ -24,7 +24,7 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public void getData(GetDataCallback callback) {
+    public void getData(GetDataCallback callback, String imageFilePath) {
 
     }
 

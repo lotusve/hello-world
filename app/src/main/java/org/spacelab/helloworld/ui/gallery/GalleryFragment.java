@@ -1,6 +1,7 @@
 package org.spacelab.helloworld.ui.gallery;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import org.spacelab.helloworld.Config;
 import org.spacelab.helloworld.R;
+
+import java.io.File;
 
 public class GalleryFragment extends Fragment {
 
@@ -49,6 +52,13 @@ public class GalleryFragment extends Fragment {
 
         Log.d(Config.TAG, "GalleryFragment onResume.");
 
-        galleryViewModel.getData();
+        // File imgFile = new File("/storage/emulated/0/baidu/searchbox/downloads/1578479381607.jpg");
+
+        File storageDirectory = Environment.getExternalStorageDirectory();
+
+        String imageFilePath = "/baidu/searchbox/downloads/1578479381607.jpg";
+        // String imageFilePath = "/DCIM/Camera/IMG_20200113_115331.jpg";
+
+        galleryViewModel.getData(storageDirectory + imageFilePath);
     }
 }

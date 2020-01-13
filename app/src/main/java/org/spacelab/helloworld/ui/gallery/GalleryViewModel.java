@@ -24,7 +24,7 @@ public class GalleryViewModel extends ViewModel {
         return mText;
     }
 
-    public void getData(){
+    public void getData(String imageFilePath){
 
         dataRepository.getData(new DataSource.GetDataCallback() {
             @Override
@@ -36,7 +36,7 @@ public class GalleryViewModel extends ViewModel {
             public void onDataNotAvailable() {
 
             }
-        });
+        }, imageFilePath);
 
         // dataRepository.getData();
 

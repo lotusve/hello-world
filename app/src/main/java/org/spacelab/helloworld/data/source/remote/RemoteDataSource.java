@@ -1,6 +1,5 @@
 package org.spacelab.helloworld.data.source.remote;
 
-import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 
@@ -12,11 +11,11 @@ import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -43,12 +42,10 @@ public class RemoteDataSource implements DataSource {
     }
 
     private void initApiService() {
-        OkHttpClient client = getOkHttpClient();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.FACE_BASE_URL) // 设置网络请求的Url地址
                 .addConverterFactory(GsonConverterFactory.create()) // 设置数据解析器
-                .client(client)
+                .client(getOkHttpClient())
                 .build();
 
         apiService = retrofit.create(ApiService.class);
@@ -79,7 +76,16 @@ public class RemoteDataSource implements DataSource {
             Log.e(Config.TAG, e.getMessage(), e);
         }
 
-        return new OkHttpClient.Builder().sslSocketFactory(sslContext.getSocketFactory(), x509TrustManager).hostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER).build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .sslSocketFactory(sslContext.getSocketFactory(), x509TrustManager)
+                .hostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .callTimeout(30, TimeUnit.SECONDS)
+                .build();
+
+        return client;
     }
 
     public static RemoteDataSource getInstance() {
@@ -94,25 +100,28 @@ public class RemoteDataSource implements DataSource {
     }
 
     @Override
-    public void getData(GetDataCallback callback) {
+    public void getData(GetDataCallback callback, String imageFilePath) {
 
         Log.d(Config.TAG, "request begin.");
 
         // getDataByUploadFile();
 
-        getDatabyUploadFileString();
+        getDatabyUploadFileString(imageFilePath);
 
     }
 
-    private void getDatabyUploadFileString() {
+    private void getDatabyUploadFileString(String imageFilePath) {
 
-        String return_attributes = "gender,age";
+        MediaType textType = MediaType.parse("text/plain");
+        RequestBody api_key = RequestBody.create(textType, Config.FACE_API_KEY);
+        RequestBody api_secret = RequestBody.create(textType, Config.FACE_API_SECRET);
+        RequestBody return_attributes = RequestBody.create(textType, "gender,age");
 
-        String image_base64 = getImageBase64String();
-
+        String image_base64 = getImageBase64String(imageFilePath);
         Log.d(Config.TAG, "image_base64: " + image_base64);
+        RequestBody image = RequestBody.create(textType, image_base64);
 
-        Call<ResponseBean> call = apiService.getCallDetect(Config.FACE_API_KEY, Config.FACE_API_SECRET, return_attributes, image_base64);
+        Call<ResponseBean> call = apiService.getCallDetect(api_key, api_secret, return_attributes, image);
 
         call.enqueue(new Callback<ResponseBean>() {
             @Override
@@ -130,16 +139,11 @@ public class RemoteDataSource implements DataSource {
 
     }
 
-    private String getImageBase64String() {
+    private String getImageBase64String(String imageFilePath) {
 
         String image_base64 = "";
 
-        File storageDirectory = Environment.getExternalStorageDirectory();
-        Log.d(Config.TAG, "storageDirectory: " + storageDirectory.getAbsolutePath());
-
-        // File imgFile = new File("/storage/emulated/0/baidu/searchbox/downloads/1578479381607.jpg");
-
-        File imgFile = new File(storageDirectory + "/baidu/searchbox/downloads/1578479381607.jpg");
+        File imgFile = new File(imageFilePath);
 
         FileInputStream fis = null;
 
