@@ -302,7 +302,7 @@ public class ResponseBean {
      * value：值为一个 [0,100] 的浮点数，小数点后3位有效数字。数值越大表示笑程度高。
      * threshold：代表笑容的阈值，超过该阈值认为有笑容。
      */
-    private class Smile {
+    public class Smile {
 
         private float value;
 
@@ -344,7 +344,7 @@ public class ResponseBean {
      * sadness：伤心
      * surprise：惊讶
      */
-    private class Emotion {
+    public class Emotion {
 
         private float anger;
         private float disgust;
@@ -430,7 +430,7 @@ public class ResponseBean {
      * male_score：男性认为的此人脸颜值分数。值越大，颜值越高。
      * female_score：女性认为的此人脸颜值分数。值越大，颜值越高。
      */
-    private class Beauty {
+    public class Beauty {
         private float male_score;
         private float female_score;
 
@@ -467,7 +467,7 @@ public class ResponseBean {
      * acne：青春痘
      * dark_circle：黑眼圈
      */
-    private class Skinstatus {
+    public class Skinstatus {
         private float health;
         private float stain;
         private float acne;

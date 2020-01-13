@@ -13,4 +13,13 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+
+    <string name="gender">性别: %1$s</string>
+    <string name="age">年龄: %1$s</string>
+    <string name="smile">笑容: %1$s</string>
+    <string name="emotion">情绪, 愤怒: %1$s, 厌恶: %2$s, 恐惧: %3$s, 高兴: %4$s, 平静: %5$s, 伤心: %6$s, 惊讶: %7$s</string>
+    <string name="beauty">颜值, male_score: %1$s, female_score: %2$s</string>
+    <string name="skinstatus">面部特征, 健康: %1$s, 色斑: %2$s, 青春痘: %3$s, 黑眼圈: %4$s</string>
+
 </resources>
