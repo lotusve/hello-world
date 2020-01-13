@@ -43,12 +43,12 @@ public class GalleryViewModel extends ViewModel {
         return mResponseBean;
     }
 
-    public void getData(String imageFilePath){
+    public void getData(String imageFilePath) {
 
         RequestBean bean = new RequestBean();
         bean.setApi_key(Constant.FACE_API_KEY);
         bean.setApi_secret(Constant.FACE_API_SECRET);
-        bean.setReturn_attributes("gender,age");
+        bean.setReturn_attributes("gender,age,smiling,emotion,beauty,skinstatus");
 
         String image_base64 = getImageBase64String(imageFilePath);
         Log.d(Config.TAG, "image_base64: " + image_base64);
