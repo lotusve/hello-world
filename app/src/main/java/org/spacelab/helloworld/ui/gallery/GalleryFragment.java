@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
+
 import org.spacelab.helloworld.Config.Config;
 import org.spacelab.helloworld.R;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
@@ -61,10 +63,11 @@ public class GalleryFragment extends Fragment {
                 ResponseBean.Face face = responseBean.getFaces().get(0);
 
                 genderTV.setText(face.getAttributes().getGender().getValue());
-                ageTV.setText(face.getAttributes().getGender().getValue());
+                ageTV.setText(face.getAttributes().getAge().getValue());
+
+                Glide.with(GalleryFragment.this).load(new File(getImageFilePath())).into(imageView);
             }
         });
-
 
     }
 
