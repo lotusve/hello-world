@@ -2,7 +2,6 @@ package org.spacelab.helloworld.ui.gallery;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 
-import org.spacelab.helloworld.Config.Config;
 import org.spacelab.helloworld.R;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
 import java.io.File;
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment extends Fragment implements View.OnClickListener {
 
     private GalleryViewModel galleryViewModel;
 
@@ -53,6 +51,8 @@ public class GalleryFragment extends Fragment {
         final TextView emotionTV = root.findViewById(R.id.emotion);
         final TextView beautyTV = root.findViewById(R.id.beauty);
         final TextView skinstatusTV = root.findViewById(R.id.skinstatus);
+
+        imageView.setOnClickListener(this);
 
         galleryViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -88,15 +88,6 @@ public class GalleryFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        Log.d(Config.TAG, "GalleryFragment onResume.");
-
-        getData();
-    }
-
     private void getData() {
         galleryViewModel.getData(getImageFilePath());
     }
@@ -111,4 +102,18 @@ public class GalleryFragment extends Fragment {
         return storageDirectory + imageFilePath;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.image:
+
+                getData();
+
+                break;
+            default:
+                break;
+        }
+
+    }
 }

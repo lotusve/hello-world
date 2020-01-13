@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -27,6 +28,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.Toast;
+
+import org.spacelab.helloworld.Config.Config;
+import org.spacelab.helloworld.util.PermissionUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,28 +67,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        checkPermission();
-    }
-
-    private void checkPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // 没有授权
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
-        } else {
-            // 已经授权
-        }
+        PermissionUtil.checkPermission(this);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case 101:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 用户已授权
-                } else {
-                    // 用户拒绝授权
+            case PermissionUtil.REQUEST_CODE:
+
+                for (int i = 0; i < grantResults.length; i++) {
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        Log.d(Config.TAG, "用户已授权," + permissions[i] + ", grant: " + grantResults[i]);
+                    } else {
+                        Log.d(Config.TAG, "用户拒绝授权," + permissions[i] + ", grant: " + grantResults[i]);
+                    }
                 }
+
                 break;
             default:
                 break;
