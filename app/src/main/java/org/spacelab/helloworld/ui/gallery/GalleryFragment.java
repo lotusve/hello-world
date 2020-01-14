@@ -81,21 +81,26 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onChanged(ResponseBean responseBean) {
 
-                ResponseBean.Face face = responseBean.getFaces().get(0);
+                try {
+                    ResponseBean.Face face = responseBean.getFaces().get(0);
 
-                genderTV.setText(String.format(getResources().getString(R.string.gender), face.getAttributes().getGender().getValue()));
-                ageTV.setText(String.format(getResources().getString(R.string.age), face.getAttributes().getAge().getValue()));
+                    genderTV.setText(String.format(getResources().getString(R.string.gender), face.getAttributes().getGender().getValue()));
+                    ageTV.setText(String.format(getResources().getString(R.string.age), face.getAttributes().getAge().getValue()));
 
-                smileTV.setText(String.format(getResources().getString(R.string.smile), String.valueOf(face.getAttributes().getSmile().getValue())));
+                    smileTV.setText(String.format(getResources().getString(R.string.smile), String.valueOf(face.getAttributes().getSmile().getValue())));
 
-                ResponseBean.Emotion emotion = face.getAttributes().getEmotion();
-                emotionTV.setText(String.format(getResources().getString(R.string.emotion), String.valueOf(emotion.getAnger()), String.valueOf(emotion.getDisgust()), String.valueOf(emotion.getFear()), String.valueOf(emotion.getHappiness()), String.valueOf(emotion.getNeutral()), String.valueOf(emotion.getSadness()), String.valueOf(emotion.getSurprise())));
+                    ResponseBean.Emotion emotion = face.getAttributes().getEmotion();
+                    emotionTV.setText(String.format(getResources().getString(R.string.emotion), String.valueOf(emotion.getAnger()), String.valueOf(emotion.getDisgust()), String.valueOf(emotion.getFear()), String.valueOf(emotion.getHappiness()), String.valueOf(emotion.getNeutral()), String.valueOf(emotion.getSadness()), String.valueOf(emotion.getSurprise())));
 
-                ResponseBean.Beauty beauty = face.getAttributes().getBeauty();
-                beautyTV.setText(String.format(getResources().getString(R.string.beauty), String.valueOf(beauty.getMale_score()), String.valueOf(beauty.getFemale_score())));
+                    ResponseBean.Beauty beauty = face.getAttributes().getBeauty();
+                    beautyTV.setText(String.format(getResources().getString(R.string.beauty), String.valueOf(beauty.getMale_score()), String.valueOf(beauty.getFemale_score())));
 
-                ResponseBean.Skinstatus skinstatus = face.getAttributes().getSkinstatus();
-                skinstatusTV.setText(String.format(getResources().getString(R.string.skinstatus), String.valueOf(skinstatus.getHealth()), String.valueOf(skinstatus.getStain()), String.valueOf(skinstatus.getAcne()), String.valueOf(skinstatus.getDark_circle())));
+                    ResponseBean.Skinstatus skinstatus = face.getAttributes().getSkinstatus();
+                    skinstatusTV.setText(String.format(getResources().getString(R.string.skinstatus), String.valueOf(skinstatus.getHealth()), String.valueOf(skinstatus.getStain()), String.valueOf(skinstatus.getAcne()), String.valueOf(skinstatus.getDark_circle())));
+
+                } catch (Exception e) {
+                    Log.e(Config.TAG, e.getMessage(), e);
+                }
             }
         });
 
