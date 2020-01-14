@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,7 @@ import com.bumptech.glide.Glide;
 import org.spacelab.helloworld.Config.Config;
 import org.spacelab.helloworld.R;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
-import org.spacelab.helloworld.util.FileUtils;
+import org.spacelab.helloworld.util.FileUtil;
 
 /**
  * 人脸识别
@@ -157,7 +156,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
                 Glide.with(activity).load(imageUri).into(imageView);
 
-                String imagePath = FileUtils.getPath(activity, imageUri);
+                String imagePath = FileUtil.getPath(activity, imageUri);
                 Log.d(Config.TAG, "imagePath: " + imagePath);
 
                 getData(imagePath);
