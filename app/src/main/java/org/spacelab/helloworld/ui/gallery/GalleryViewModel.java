@@ -1,5 +1,6 @@
 package org.spacelab.helloworld.ui.gallery;
 
+import android.graphics.Bitmap;
 import android.util.Base64;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import org.spacelab.helloworld.data.source.remote.http.gallery.Constant;
 import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -44,7 +46,6 @@ public class GalleryViewModel extends ViewModel {
     }
 
     public void getData(String imageFilePath) {
-
         RequestBean bean = new RequestBean();
         bean.setApi_key(Constant.FACE_API_KEY);
         bean.setApi_secret(Constant.FACE_API_SECRET);
@@ -62,35 +63,68 @@ public class GalleryViewModel extends ViewModel {
 
             @Override
             public void onDataNotAvailable() {
-
             }
         });
+    }
 
+    public void getData(Bitmap bitmap) {
+        RequestBean bean = new RequestBean();
+        bean.setApi_key(Constant.FACE_API_KEY);
+        bean.setApi_secret(Constant.FACE_API_SECRET);
+        bean.setReturn_attributes("gender,age,smiling,emotion,beauty,skinstatus");
+
+        String image_base64 = getImageBase64String(bitmap);
+        Log.d(Config.TAG, "image_base64: " + image_base64);
+        bean.setImage_base64(image_base64);
+
+        dataRepository.getData(bean, new DataSource.GetDataCallback() {
+            @Override
+            public void onDataLoaded(ResponseBean bean) {
+                mResponseBean.setValue(bean);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+            }
+        });
     }
 
     private String getImageBase64String(String imageFilePath) {
-
         String image_base64 = "";
-
         File imgFile = new File(imageFilePath);
-
         FileInputStream fis = null;
-
         try {
-
             fis = new FileInputStream(imgFile);
-
             byte[] buffer = new byte[(int) imgFile.length()];
-
             fis.read(buffer);
 
-            image_base64 = Base64.encodeToString(buffer, Base64.DEFAULT);
-
+            image_base64 = Base64.encodeToString(buffer, Base64.DEFAULT); // base64 加密
         } catch (Exception e) {
             Log.e(Config.TAG, e.getMessage(), e);
         } finally {
             try {
                 fis.close();
+            } catch (IOException e) {
+                Log.e(Config.TAG, e.getMessage(), e);
+            }
+        }
+        return image_base64;
+    }
+
+    private String getImageBase64String(Bitmap bitmap) {
+        String image_base64 = "";
+        ByteArrayOutputStream baos = null;
+        try {
+            baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            baos.flush();
+
+            image_base64 = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT); // base64 加密
+        } catch (Exception e) {
+            Log.e(Config.TAG, e.getMessage(), e);
+        } finally {
+            try {
+                baos.close();
             } catch (IOException e) {
                 Log.e(Config.TAG, e.getMessage(), e);
             }

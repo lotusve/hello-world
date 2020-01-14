@@ -2,8 +2,10 @@ package org.spacelab.helloworld.ui.gallery;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,8 @@ import org.spacelab.helloworld.R;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 import org.spacelab.helloworld.util.FileUtil;
 import org.spacelab.helloworld.util.ImageSelectUtil;
+
+import java.io.IOException;
 
 /**
  * 人脸识别
@@ -105,11 +109,21 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         galleryViewModel.getData(imageFilePath);
     }
 
+    private void getData(Bitmap bitmap) {
+        galleryViewModel.getData(bitmap);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image:
-                ImageSelectUtil.getOneImageFromLocal(this);
+
+                // ImageSelectUtil.pickImageFromLocal(this);
+
+                // ImageSelectUtil.pickAndCropSmallBitmap(this);
+
+                ImageSelectUtil.pickAndCropBigBitmap(this);
+
                 break;
             default:
                 break;
@@ -135,6 +149,28 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
                 getData(imagePath);
 
+                break;
+            case ImageSelectUtil.REQUEST_CROP_IMAGE_SMALL:
+
+                Bitmap bitmap = data.getParcelableExtra("data");
+
+                Glide.with(activity).load(bitmap).into(imageView);
+
+                getData(bitmap);
+
+                break;
+
+            case ImageSelectUtil.REQUEST_CROP_IMAGE_BIG:
+
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), ImageSelectUtil.imageUri);
+
+                    Glide.with(activity).load(bitmap).into(imageView);
+
+                    getData(bitmap);
+                } catch (IOException e) {
+                    Log.e(Config.TAG, e.getMessage(), e);
+                }
                 break;
             default:
                 break;
