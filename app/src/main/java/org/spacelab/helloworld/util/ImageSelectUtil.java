@@ -103,36 +103,6 @@ public class ImageSelectUtil {
         fragment.startActivityForResult(intent, REQUEST_CAPTURE_AND_CROP);
     }
 
-    private static Uri getImageUri(Activity activity, boolean fromFile) {
-
-        Uri uri = null;
-
-        try {
-            File imageFile = new File(activity.getExternalCacheDir(), System.currentTimeMillis() + ".png");
-
-            if (imageFile.exists()) {
-                imageFile.delete();
-            }
-
-            imageFile.createNewFile();
-
-            if (fromFile) {
-                uri = Uri.fromFile(imageFile);
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    uri = CommonFileProvider.getUriForFile(activity, Config.AUTHORITY, imageFile);
-                } else {
-                    uri = Uri.fromFile(imageFile);
-                }
-            }
-
-        } catch (IOException e) {
-            Log.e(Config.TAG, e.getMessage(), e);
-        }
-
-        return uri;
-    }
-
     /**
      * 裁剪拍照后得到的图片
      */
@@ -157,4 +127,35 @@ public class ImageSelectUtil {
         fragment.startActivityForResult(intent, REQUEST_CROP_IMAGE_BIG);
     }
 
+    /**
+     * 构造 Image Uri
+     * @param activity activity
+     * @param fromFile if create uri from file
+     * @return
+     */
+    private static Uri getImageUri(Activity activity, boolean fromFile) {
+        Uri uri = null;
+        try {
+            File imageFile = new File(activity.getExternalCacheDir(), System.currentTimeMillis() + ".png");
+
+            if (imageFile.exists()) {
+                imageFile.delete();
+            }
+
+            imageFile.createNewFile();
+
+            if (fromFile) {
+                uri = Uri.fromFile(imageFile);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    uri = CommonFileProvider.getUriForFile(activity, Config.AUTHORITY, imageFile);
+                } else {
+                    uri = Uri.fromFile(imageFile);
+                }
+            }
+        } catch (IOException e) {
+            Log.e(Config.TAG, e.getMessage(), e);
+        }
+        return uri;
+    }
 }
