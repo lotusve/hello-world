@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -72,8 +71,10 @@ public class ImageSelectUtil {
     /**
      * 选择一张图片并裁剪获得一个大图
      */
-    public static void pickAndCropBigBitmap(Fragment fragment) {
-        imageUri = getTmpUri();
+    public static void pickAndCropBigBitmap(Fragment fragment, Activity activity) {
+
+        imageUri = getImageUri(activity, true);
+
         Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setType("image/*");
         intent.putExtra("crop", "true");
@@ -94,7 +95,7 @@ public class ImageSelectUtil {
      */
     public static void startImageCapture(Fragment fragment, Activity activity) {
 
-        getImageUri(activity);
+        imageUri = getImageUri(activity, false);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -102,9 +103,12 @@ public class ImageSelectUtil {
         fragment.startActivityForResult(intent, REQUEST_CAPTURE_AND_CROP);
     }
 
-    private static void getImageUri(Activity activity) {
+    private static Uri getImageUri(Activity activity, boolean fromFile) {
+
+        Uri uri = null;
+
         try {
-            File imageFile = new File(activity.getExternalCacheDir(), "tmp.png");
+            File imageFile = new File(activity.getExternalCacheDir(), System.currentTimeMillis() + ".png");
 
             if (imageFile.exists()) {
                 imageFile.delete();
@@ -112,27 +116,21 @@ public class ImageSelectUtil {
 
             imageFile.createNewFile();
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                imageUri = CommonFileProvider.getUriForFile(activity, Config.AUTHORITY, imageFile);
+            if (fromFile) {
+                uri = Uri.fromFile(imageFile);
             } else {
-                imageUri = Uri.fromFile(imageFile);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    uri = CommonFileProvider.getUriForFile(activity, Config.AUTHORITY, imageFile);
+                } else {
+                    uri = Uri.fromFile(imageFile);
+                }
             }
+
         } catch (IOException e) {
             Log.e(Config.TAG, e.getMessage(), e);
         }
-    }
 
-    /**
-     * 获得临时保存图片的Uri，用当前的毫秒值作为文件名
-     */
-    private static Uri getTmpUri() {
-        String IMAGE_FILE_DIR = Environment.getExternalStorageDirectory() + "/" + "app_name";
-        File dir = new File(IMAGE_FILE_DIR);
-        File file = new File(IMAGE_FILE_DIR, Long.toString(System.currentTimeMillis()));
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        return Uri.fromFile(file);
+        return uri;
     }
 
     /**

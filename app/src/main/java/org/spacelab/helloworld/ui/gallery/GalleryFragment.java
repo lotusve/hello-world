@@ -122,7 +122,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
                 // ImageSelectUtil.pickAndCropSmallBitmap(this);
 
-                // ImageSelectUtil.pickAndCropBigBitmap(this);
+                // ImageSelectUtil.pickAndCropBigBitmap(this, activity);
 
                 ImageSelectUtil.startImageCapture(this, activity);
 
