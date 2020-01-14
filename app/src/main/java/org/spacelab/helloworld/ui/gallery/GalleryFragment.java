@@ -23,13 +23,12 @@ import org.spacelab.helloworld.Config.Config;
 import org.spacelab.helloworld.R;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 import org.spacelab.helloworld.util.FileUtil;
+import org.spacelab.helloworld.util.ImageSelectUtil;
 
 /**
  * 人脸识别
  */
 public class GalleryFragment extends Fragment implements View.OnClickListener {
-
-    private static final int REQUEST_PICK_IMAGE = 101;
 
     private Activity activity;
 
@@ -110,36 +109,11 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.image:
-                getImageFromLocal();
+                ImageSelectUtil.getOneImageFromLocal(this);
                 break;
             default:
                 break;
         }
-    }
-
-    /**
-     * 从本地相册选择一张图片
-     */
-    private void getImageFromLocal() {
-
-        // action 可选择Intent.ACTION_GET_CONTENT or Intent.ACTION_PICK
-        // 辅以 Uri or Type
-        // IntentFilter 会过滤
-
-//        方式一
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-
-//        方式二
-//        Intent intent = new Intent(Intent.ACTION_PICK);
-//        intent.setType("image/*");
-
-//        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, REQUEST_PICK_IMAGE);
     }
 
     @Override
@@ -149,7 +123,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
         }
 
         switch (requestCode) {
-            case REQUEST_PICK_IMAGE:
+            case ImageSelectUtil.REQUEST_PICK_IMAGE:
 
                 Uri imageUri = data.getData();
                 Log.d(Config.TAG, "imageUri: " + imageUri);
