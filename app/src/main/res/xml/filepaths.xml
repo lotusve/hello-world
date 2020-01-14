@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+
+    <!--Environment.getExternalStorageDirectory()-->
+    <!--/storage/emulated/0-->
+    <external-path
+        name="external-path"
+        path="." />
+
+    <!--Context.getExternalFilesDir(String)-->
+    <!--/storage/emulated/0/Android/data/com.longfor.app.uhome/files-->
+    <external-files-path
+        name="external-files-path"
+        path="." />
+
+    <!--Context.getExternalCacheDir()-->
+    <!--/storage/emulated/0/Android/data/com.longfor.app.uhome/cache-->
+    <external-cache-path
+        name="external-cache-path"
+        path="." />
+
+    <!--Context.getFilesDir()-->
+    <!--/data/data/com.longfor.app.uhome/files-->
+    <files-path
+        name="files-path"
+        path="." />
+
+    <!--Context.getCacheDir()-->
+    <!--/data/data/com.longfor.app.uhome/cache-->
+    <cache-path
+        name="cache-path"
+        path="." />
+
+    <!--SD卡内文件， FileProvider可读取，否则抛异常-->
+    <!--/storage/6461-6263/Android/data/com.longfor.app.uhome-->
+    <!--/storage/sdcard1/Android/data/com.longfor.app.uhome-->
+    <root-path
+        name="root-path"
+        path="." />
+
+</paths>

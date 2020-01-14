@@ -122,7 +122,9 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
                 // ImageSelectUtil.pickAndCropSmallBitmap(this);
 
-                ImageSelectUtil.pickAndCropBigBitmap(this);
+                // ImageSelectUtil.pickAndCropBigBitmap(this);
+
+                ImageSelectUtil.startImageCapture(this, activity);
 
                 break;
             default:
@@ -159,7 +161,6 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                 getData(bitmap);
 
                 break;
-
             case ImageSelectUtil.REQUEST_CROP_IMAGE_BIG:
 
                 try {
@@ -171,6 +172,11 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                 } catch (IOException e) {
                     Log.e(Config.TAG, e.getMessage(), e);
                 }
+                break;
+            case ImageSelectUtil.REQUEST_CAPTURE_AND_CROP:
+
+                ImageSelectUtil.cropImage(this, ImageSelectUtil.imageUri);
+
                 break;
             default:
                 break;
