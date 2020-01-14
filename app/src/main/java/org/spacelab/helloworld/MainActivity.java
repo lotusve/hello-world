@@ -1,6 +1,5 @@
 package org.spacelab.helloworld;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
@@ -12,8 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
