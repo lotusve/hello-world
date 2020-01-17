@@ -45,6 +45,10 @@ public class GalleryViewModel extends ViewModel {
         return mResponseBean;
     }
 
+    /**
+     * 传入图片，获得分析结果数据
+     * @param imageFilePath 图片文件路径
+     */
     public void getData(String imageFilePath) {
         RequestBean bean = new RequestBean();
         bean.setApi_key(Constant.FACE_API_KEY);
@@ -67,6 +71,10 @@ public class GalleryViewModel extends ViewModel {
         });
     }
 
+    /**
+     * 传入图片，获得分析结果数据
+     * @param bitmap bitmap 图片
+     */
     public void getData(Bitmap bitmap) {
         RequestBean bean = new RequestBean();
         bean.setApi_key(Constant.FACE_API_KEY);
@@ -89,6 +97,11 @@ public class GalleryViewModel extends ViewModel {
         });
     }
 
+    /**
+     * 将 Bitmap 二进制内容，Base64 编码
+     * @param imageFilePath bitmap 文件路径
+     * @return
+     */
     private String getImageBase64String(String imageFilePath) {
         String image_base64 = "";
         File imgFile = new File(imageFilePath);
@@ -111,6 +124,11 @@ public class GalleryViewModel extends ViewModel {
         return image_base64;
     }
 
+    /**
+     * 将 Bitmap 二进制内容，Base64 编码
+     * @param bitmap bitmap 图片
+     * @return
+     */
     private String getImageBase64String(Bitmap bitmap) {
         String image_base64 = "";
         ByteArrayOutputStream baos = null;

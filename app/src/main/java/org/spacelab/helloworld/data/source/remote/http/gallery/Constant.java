@@ -1,5 +1,8 @@
 package org.spacelab.helloworld.data.source.remote.http.gallery;
 
+/**
+ * 常量
+ */
 public class Constant {
 
     public static final String FACE_BASE_URL = "https://api-cn.faceplusplus.com/";

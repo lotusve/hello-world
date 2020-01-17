@@ -3,6 +3,9 @@ package org.spacelab.helloworld.data.source.local;
 import org.spacelab.helloworld.data.source.DataSource;
 import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
 
+/**
+ * 本地数据
+ */
 public class LocalDataSource implements DataSource {
 
     private static LocalDataSource INSTANCE;

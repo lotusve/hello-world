@@ -19,6 +19,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * 远程数据
+ */
 public class RemoteDataSource implements DataSource {
 
     private static RemoteDataSource INSTANCE;
@@ -101,7 +104,6 @@ public class RemoteDataSource implements DataSource {
                 Log.e(Config.TAG, "onFailure", t);
             }
         });
-
     }
 
     @Override

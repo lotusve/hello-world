@@ -18,6 +18,11 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * 1. 创建 OkHttpClient
+ * 2. 创建 Retrofit
+ * 3. 创建 ApiService
+ */
 public class ApiServiceHelper {
 
     public static ApiService getApiService(){

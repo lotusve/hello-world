@@ -149,7 +149,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                 Uri imageUri = data.getData();
                 Log.d(Config.TAG, "imageUri: " + imageUri);
 
-                Glide.with(activity).load(imageUri).into(imageView);
+                updateImageView(imageUri);
 
                 String imagePath = FileUtil.getPath(activity, imageUri);
                 Log.d(Config.TAG, "imagePath: " + imagePath);
@@ -161,7 +161,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
                 Bitmap bitmap = data.getParcelableExtra("data");
 
-                Glide.with(activity).load(bitmap).into(imageView);
+                updateImageView(bitmap);
 
                 getData(bitmap);
 
@@ -171,7 +171,7 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), ImageSelectUtil.imageUri);
 
-                    Glide.with(activity).load(bitmap).into(imageView);
+                    updateImageView(bitmap);
 
                     getData(bitmap);
                 } catch (IOException e) {
@@ -186,5 +186,13 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    private void updateImageView(Bitmap bitmap) {
+        Glide.with(activity).load(bitmap).into(imageView);
+    }
+
+    private void updateImageView(Uri imageUri) {
+        Glide.with(activity).load(imageUri).into(imageView);
     }
 }
