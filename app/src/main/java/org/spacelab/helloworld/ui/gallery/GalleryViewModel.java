@@ -28,13 +28,13 @@ public class GalleryViewModel extends ViewModel {
 
     private DataRepository dataRepository;
 
-    public GalleryViewModel() {
+    public GalleryViewModel(DataRepository repository) {
         mText = new MutableLiveData<>();
         mText.setValue("The face test.");
 
         mResponseBean = new MutableLiveData<>();
 
-        dataRepository = DataRepository.getInstance();
+        dataRepository = repository;
     }
 
     public LiveData<String> getText() {

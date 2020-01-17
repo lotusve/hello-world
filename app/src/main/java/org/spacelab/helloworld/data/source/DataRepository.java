@@ -1,23 +1,25 @@
 package org.spacelab.helloworld.data.source;
 
-import org.spacelab.helloworld.data.source.remote.RemoteDataSource;
 import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
 
 public class DataRepository implements DataSource {
 
     private static DataRepository INSTANCE = null;
 
-    private RemoteDataSource remoteDataSource;
+    private final DataSource mRemoteDataSource;
 
-    private DataRepository() {
-        remoteDataSource = RemoteDataSource.getInstance();
+    private final DataSource mLocalDataSource;
+
+    private DataRepository(DataSource remoteDataSource, DataSource localDataSource) {
+        mRemoteDataSource = remoteDataSource;
+        mLocalDataSource = localDataSource;
     }
 
-    public static DataRepository getInstance() {
+    public static DataRepository getInstance(DataSource remoteDataSource, DataSource localDataSource) {
         if (INSTANCE == null) {
             synchronized (DataRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new DataRepository();
+                    INSTANCE = new DataRepository(remoteDataSource, localDataSource);
                 }
             }
         }
@@ -26,12 +28,12 @@ public class DataRepository implements DataSource {
 
     @Override
     public void getData(RequestBean bean, GetDataCallback callback) {
-        remoteDataSource.getData(bean, callback);
+        mRemoteDataSource.getData(bean, callback);
     }
 
     @Override
     public void getData(String imageUrl) {
-        remoteDataSource.getData(imageUrl);
+        mRemoteDataSource.getData(imageUrl);
     }
 
     @Override

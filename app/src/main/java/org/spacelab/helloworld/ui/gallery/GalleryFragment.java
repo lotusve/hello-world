@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 
 import org.spacelab.helloworld.Config.Config;
 import org.spacelab.helloworld.R;
+import org.spacelab.helloworld.component.ViewModelFactory;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 import org.spacelab.helloworld.util.FileUtil;
 import org.spacelab.helloworld.util.ImageSelectUtil;
@@ -36,6 +37,8 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
 
     private Activity activity;
 
+    private View root;
+
     private ImageView imageView;
 
     private GalleryViewModel galleryViewModel;
@@ -43,12 +46,10 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        galleryViewModel = ViewModelProviders.of(this).get(GalleryViewModel.class);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        initView(root);
+        root = inflater.inflate(R.layout.fragment_gallery, container, false);
         return root;
     }
 
@@ -56,9 +57,18 @@ public class GalleryFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = getActivity();
+        obtainViewModel();
+        initView();
     }
 
-    private void initView(View root) {
+    private void obtainViewModel() {
+
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplicationContext());
+
+        galleryViewModel = ViewModelProviders.of(this, factory).get(GalleryViewModel.class);
+    }
+
+    private void initView() {
         imageView = root.findViewById(R.id.image);
         imageView.setOnClickListener(this);
 

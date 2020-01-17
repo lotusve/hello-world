@@ -1,5 +1,6 @@
 package org.spacelab.helloworld.data.source.local;
 
+import org.spacelab.helloworld.component.AppExecutors;
 import org.spacelab.helloworld.data.source.DataSource;
 import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
 
@@ -10,17 +11,20 @@ public class LocalDataSource implements DataSource {
 
     private static LocalDataSource INSTANCE;
 
-    private DataDao dao;
+    private DataDao mDataDao;
 
-    private LocalDataSource() {
+    private AppExecutors mAppExecutors;
 
+    private LocalDataSource(DataDao dataDao, AppExecutors appExecutors) {
+        mDataDao = dataDao;
+        mAppExecutors = appExecutors;
     }
 
-    public static LocalDataSource getInstance() {
+    public static LocalDataSource getInstance(DataDao dataDao, AppExecutors appExecutors) {
         if (INSTANCE == null) {
             synchronized (LocalDataSource.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new LocalDataSource();
+                    INSTANCE = new LocalDataSource(dataDao, appExecutors);
                 }
             }
         }
