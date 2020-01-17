@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.fragment.app.Fragment;
 
 import org.spacelab.helloworld.Config.Config;
+import org.spacelab.helloworld.component.CommonFileProvider;
 
 import java.io.File;
 import java.io.IOException;
