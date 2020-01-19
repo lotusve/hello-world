@@ -16,7 +16,7 @@ public abstract class DataBase extends RoomDatabase {
 
     private static DataBase instance;
 
-    public abstract DataDao dataDao();
+    public abstract ImageDao dataDao();
 
     private static final Object sLock = new Object();
 

@@ -11,16 +11,16 @@ public class LocalDataSource implements DataSource {
 
     private static LocalDataSource INSTANCE;
 
-    private DataDao mDataDao;
+    private ImageDao mImageDao;
 
     private AppExecutors mAppExecutors;
 
-    private LocalDataSource(DataDao dataDao, AppExecutors appExecutors) {
-        mDataDao = dataDao;
+    private LocalDataSource(ImageDao imageDao, AppExecutors appExecutors) {
+        mImageDao = imageDao;
         mAppExecutors = appExecutors;
     }
 
-    public static LocalDataSource getInstance(DataDao dataDao, AppExecutors appExecutors) {
+    public static LocalDataSource getInstance(ImageDao dataDao, AppExecutors appExecutors) {
         if (INSTANCE == null) {
             synchronized (LocalDataSource.class) {
                 if (INSTANCE == null) {
