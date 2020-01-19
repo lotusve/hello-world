@@ -20,6 +20,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * 人脸识别 ViewModel
+ */
 public class GalleryViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;

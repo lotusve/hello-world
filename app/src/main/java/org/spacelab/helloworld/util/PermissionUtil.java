@@ -11,6 +11,9 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 权限工具类
+ */
 public class PermissionUtil {
 
     public static final int REQUEST_CODE = 101;

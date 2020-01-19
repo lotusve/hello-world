@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModelProvider;
 import org.spacelab.helloworld.data.source.DataRepository;
 import org.spacelab.helloworld.ui.gallery.GalleryViewModel;
 
+/**
+ * ViewModel 工厂类
+ */
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private static volatile ViewModelFactory instance;

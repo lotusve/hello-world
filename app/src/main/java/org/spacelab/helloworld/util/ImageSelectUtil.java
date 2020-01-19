@@ -16,6 +16,9 @@ import org.spacelab.helloworld.component.CommonFileProvider;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 选择图片工具类
+ */
 public class ImageSelectUtil {
 
     public static final int REQUEST_PICK_IMAGE = 101;

@@ -8,6 +8,9 @@ import androidx.room.RoomDatabase;
 
 import org.spacelab.helloworld.data.entiry.Image;
 
+/**
+ * 数据库
+ */
 @Database(entities = {Image.class}, version = 1)
 public abstract class DataBase extends RoomDatabase {
 

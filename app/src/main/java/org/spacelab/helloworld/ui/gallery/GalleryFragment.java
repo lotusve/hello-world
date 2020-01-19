@@ -31,7 +31,7 @@ import org.spacelab.helloworld.util.ImageSelectUtil;
 import java.io.IOException;
 
 /**
- * 人脸识别
+ * 人脸识别 Fragment
  */
 public class GalleryFragment extends Fragment implements View.OnClickListener {
 

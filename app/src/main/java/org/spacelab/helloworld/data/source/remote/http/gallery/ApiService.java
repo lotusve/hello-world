@@ -10,6 +10,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Url;
 
+/**
+ * http 请求接口定义
+ */
 public interface ApiService {
 
     // 测试暂未通过

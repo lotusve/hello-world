@@ -2,6 +2,9 @@ package org.spacelab.helloworld.data.source;
 
 import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
 
+/**
+ * 统一数据接口，实现类
+ */
 public class DataRepository implements DataSource {
 
     private static DataRepository INSTANCE = null;

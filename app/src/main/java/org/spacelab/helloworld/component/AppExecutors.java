@@ -2,6 +2,9 @@ package org.spacelab.helloworld.component;
 
 import java.util.concurrent.Executor;
 
+/**
+ * app 线程池，管理类
+ */
 public class AppExecutors {
 
     private final Executor diskIO;
