@@ -1,6 +1,7 @@
 package org.spacelab.helloworld.data.source.local;
 
 import org.spacelab.helloworld.component.AppExecutors;
+import org.spacelab.helloworld.data.entiry.Image;
 import org.spacelab.helloworld.data.source.DataSource;
 import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
 
@@ -42,7 +43,13 @@ public class LocalDataSource implements DataSource {
     }
 
     @Override
-    public void saveData() {
-
+    public void saveImage(final Image image) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mImageDao.insertImage(image);
+            }
+        };
+        mAppExecutors.diskIO().execute(runnable);
     }
 }

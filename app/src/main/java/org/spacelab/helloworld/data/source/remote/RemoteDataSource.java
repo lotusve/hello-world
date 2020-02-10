@@ -3,6 +3,7 @@ package org.spacelab.helloworld.data.source.remote;
 import android.util.Log;
 
 import org.spacelab.helloworld.Config.Config;
+import org.spacelab.helloworld.data.entiry.Image;
 import org.spacelab.helloworld.data.source.DataSource;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ApiService;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ApiServiceHelper;
@@ -106,11 +107,6 @@ public class RemoteDataSource implements DataSource {
         });
     }
 
-    @Override
-    public void saveData() {
-
-    }
-
     /**
      * 测试不通过
      */
@@ -146,4 +142,8 @@ public class RemoteDataSource implements DataSource {
         });
     }
 
+    @Override
+    public void saveImage(Image image) {
+
+    }
 }

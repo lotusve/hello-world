@@ -1,6 +1,8 @@
 package org.spacelab.helloworld.data.source;
 
+import org.spacelab.helloworld.data.entiry.Image;
 import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
+import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
 /**
  * 统一数据接口，实现类
@@ -30,8 +32,22 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public void getData(RequestBean bean, GetDataCallback callback) {
-        mRemoteDataSource.getData(bean, callback);
+    public void getData(RequestBean bean, final GetDataCallback callback) {
+        mRemoteDataSource.getData(bean, new GetDataCallback() {
+            @Override
+            public void onDataLoaded(ResponseBean bean) {
+                callback.onDataLoaded(bean);
+
+                Image image = new Image(bean.getImage_id(), bean.getRequest_id(), bean.getTime_used(), bean.getError_message());
+
+                mLocalDataSource.saveImage(image);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
     }
 
     @Override
@@ -40,8 +56,7 @@ public class DataRepository implements DataSource {
     }
 
     @Override
-    public void saveData() {
+    public void saveImage(Image image) {
 
     }
-
 }

@@ -1,5 +1,6 @@
 package org.spacelab.helloworld.data.source;
 
+import org.spacelab.helloworld.data.entiry.Image;
 import org.spacelab.helloworld.data.source.remote.http.gallery.RequestBean;
 import org.spacelab.helloworld.data.source.remote.http.gallery.ResponseBean;
 
@@ -20,6 +21,6 @@ public interface DataSource {
 
     void getData(String imageUrl);
 
-    void saveData();
+    void saveImage(Image image);
 
 }
